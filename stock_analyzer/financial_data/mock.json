@@ -1,0 +1,39 @@
+{
+  "Meta Data": {
+    "1. Information": "Daily Prices (open, high, low, close) and Volumes",
+    "2. Symbol": "IBM",
+    "3. Last Refreshed": "2024-10-18",
+    "4. Output Size": "Full size",
+    "5. Time Zone": "US/Eastern"
+  },
+  "Time Series (Daily)": {
+    "2024-10-18": {
+      "1. open": "231.9200",
+      "2. high": "232.6499",
+      "3. low": "230.1700",
+      "4. close": "232.2000",
+      "5. volume": "4715688"
+    },
+    "2024-10-17": {
+      "1. open": "232.0000",
+      "2. high": "233.1450",
+      "3. low": "230.6550",
+      "4. close": "232.8800",
+      "5. volume": "5040092"
+    },
+    "2024-10-16": {
+      "1. open": "232.1100",
+      "2. high": "233.8800",
+      "3. low": "231.1200",
+      "4. close": "233.6700",
+      "5. volume": "2846669"
+    },
+    "2024-10-15": {
+      "1. open": "236.4000",
+      "2. high": "237.3700",
+      "3. low": "232.7100",
+      "4. close": "232.9600",
+      "5. volume": "3350556"
+    }
+  }
+}

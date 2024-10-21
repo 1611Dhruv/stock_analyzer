@@ -1,0 +1,135 @@
+<!-- templates/stock_analyzer.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockAnalyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-sky-900 p-6 text-center text-white">
+      <h1 class="text-3xl font-bold">StockAnalyzer</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6 mt-10">
+      <!-- Form Section -->
+      <div class="bg-white rounded-lg shadow-lg p-8 max-w-lg mx-auto">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">
+          Manage Stock Symbols
+        </h2>
+
+        <!-- Form for Adding Symbol -->
+        <form method="POST">
+          {% csrf_token %}
+          <!-- Add Symbol Field -->
+          <div class="mb-4">
+            <label for="symbol" class="block text-gray-700 font-medium mb-2">
+              Add Symbol
+            </label>
+            <input
+              type="text"
+              id="symbol"
+              name="symbol"
+              placeholder="Enter stock symbol"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+            />
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-between mt-6">
+            <button
+              type="submit"
+              name="add_symbol"
+              class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+            >
+              Add Symbol
+            </button>
+            <button
+              type="submit"
+              name="refresh_existing"
+              class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+            >
+              Refresh Existing
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Stock Symbol Search Section -->
+      <div class="bg-white rounded-lg shadow-lg p-8 max-w-lg mx-auto mt-10">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">
+          Search Stock Prices
+        </h2>
+
+        <!-- Form for Stock Symbol Search -->
+        <form method="GET" action="{% url 'view_data' %}">
+          <div class="mb-4">
+            <label
+              for="search_symbol"
+              class="block text-gray-700 font-medium mb-2"
+            >
+              Search Symbol
+            </label>
+            <input
+              type="text"
+              id="search_symbol"
+              name="search_symbol"
+              placeholder="Enter stock symbol (e.g., IBM)"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+            />
+          </div>
+
+          <!-- Search Button -->
+          <div class="flex justify-center mt-6">
+            <button
+              type="submit"
+              class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Stock Price Data Table -->
+      {% if stock_data %}
+      <div class="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto mt-10">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">
+          Stock Price Data for {{ symbol }}
+        </h2>
+
+        <!-- Table for Stock Prices -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white">
+            <thead class="bg-gray-200 text-gray-600">
+              <tr>
+                <th class="py-2 px-4">Date</th>
+                <th class="py-2 px-4">Open</th>
+                <th class="py-2 px-4">High</th>
+                <th class="py-2 px-4">Low</th>
+                <th class="py-2 px-4">Close</th>
+                <th class="py-2 px-4">Volume</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in stock_data %}
+              <tr>
+                <td class="py-2 px-4 border">{{ entry.date }}</td>
+                <td class="py-2 px-4 border">{{ entry.open_price }}</td>
+                <td class="py-2 px-4 border">{{ entry.high_price }}</td>
+                <td class="py-2 px-4 border">{{ entry.low_price }}</td>
+                <td class="py-2 px-4 border">{{ entry.close_price }}</td>
+                <td class="py-2 px-4 border">{{ entry.volume }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
