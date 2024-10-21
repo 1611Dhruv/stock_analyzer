@@ -1,85 +1,86 @@
-### **Project Overview**
+# Financial Data Analysis Platform
 
-This Django application serves as a financial data analysis platform, offering functionalities such as:
+## Overview
 
-- Fetching historical stock data from Alpha Vantage API
-- Storing data in a PostgreSQL database
-- Backtesting simple buy/sell strategies
-- Integrating a pre-trained machine learning model for stock price prediction
-- Generating comprehensive reports
+This Django application serves as a comprehensive financial data analysis platform. It offers functionalities for fetching and analyzing stock data, backtesting trading strategies, and leveraging machine learning for price predictions.
 
-**Prerequisites**
+## Features
+
+- Historical stock data retrieval from Alpha Vantage API
+- PostgreSQL database for data storage
+- Backtesting of simple buy/sell strategies
+- Integration of a pre-trained machine learning model for stock price prediction
+- Comprehensive report generation
+
+## Prerequisites
 
 - Python 3.x
 - pip
 - git
-- Docker (recommended)
 
-**Installation**
+## Installation
 
-1. **Clone the Repository:**
-
-   ```bash
-   git clone https://<your_repository_url>
-   ```
-
-2. **Configure Environment Variables:**
-
-   - Create a `.env` file in the project root directory.
-   - Add your Alpha Vantage API key:
-     ```
-     ALPHA_VANTAGE_API_KEY=<your_api_key>
-     ```
-
-3. **Install Dependencies:**
-
-   - Invoke the `startup` script in the project root directory.
-   - Make sure to invoke it using the `. ./startup` command so that the environment changes get applied to your current shell session
+1. Clone the repository:
 
    ```bash
-   . ./startup
+   git clone https://[your-repository-url]
    ```
 
-   **Running the Application**
+2. Set up the environment variables:
+   Create a `.env` file in the project root with the following contents:
 
-4. **Run the Development Server:**
+   ```
+   ALPHA_VANTAGE_API_KEY=[your_api_key]
+   DB_URL=[your_psql_database_url]
+   DB_USER=[your_psql_username]
+   DB_PASSWORD=[your_psql_password]
+   ```
+
+3. Install dependencies:
    ```bash
-   python manage.py runserver
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
    ```
 
-**API Endpoints**
+## Running the Application
 
-- **Financial Data:**
-  - `POST /financial_data/add`: Add a new stock symbol. It expects the `symbol` parameter in the request body.
-  - `POST /financial_data/refresh`: Refresh data for existing symbols
-  - `GET /financial_data/data`: List available symbols
-  - `GET /financial_data/data?symbol=<symbol>`: Get data for a specific symbol
-- **Backtesting:**
-  - `GET /back_test?format=<pdf|json>&symbol=<symbol>&winsell=<sell_threshold>&winbuy=<buy_threshold>`: Perform backtesting
-- **AI Prediction:**
-  - `GET /ai_prediction?symbol=<symbol>`: Get predicted prices
-- **Reporting:**
-  - Access the reporting interface at `/reporting/`
+Start the development server:
 
-**Deployment**
+```bash
+python manage.py runserver
+```
 
-- **Dockerize:** Create a Dockerfile to package the application.
-- **Configure Cloud Provider:** Set up AWS or another cloud provider with necessary resources (e.g., EC2, S3, RDS).
-- **Deploy:** Use tools like `docker-compose` or CI/CD pipelines to deploy the containerized application.
+## API Endpoints
 
-**Evaluation Criteria**
+### Financial Data
 
-- **API Integration:** Efficient data fetching and handling.
-- **Backtesting Logic:** Accurate calculations and performance metrics.
-- **ML Integration:** Seamless model integration and prediction accuracy.
-- **Reporting:** Clear visualizations and metrics.
-- **Deployment:** Production-ready setup and scalability.
-- **Documentation:** Comprehensive README and clear instructions.
+- `POST /financial_data/add`
 
-**Additional Notes**
+  - Add a new stock symbol
+  - Expects `symbol` in the request body
 
-- Ensure the `startup` script handles environment setup and dependency installation.
-- Consider using a secrets management tool to store sensitive information like API keys.
-- Provide detailed instructions for deployment, including configuration and deployment scripts.
+- `POST /financial_data/refresh`
 
-By following these steps and adhering to the evaluation criteria, you can successfully complete the Django Backend Engineer Trial Task.
+  - Refresh data for existing symbols
+
+- `GET /financial_data/data`
+
+  - List available symbols
+
+- `GET /financial_data/data?symbol=<symbol>`
+  - Get data for a specific symbol
+
+### Backtesting
+
+- `GET /back_test?format=<pdf|json>&symbol=<symbol>&winsell=<sell_threshold>&winbuy=<buy_threshold>`
+  - Perform backtesting with specified parameters
+
+### AI Prediction
+
+- `GET /ai_prediction?symbol=<symbol>`
+  - Get predicted prices for a symbol
+
+### Reporting
+
+- Access the reporting interface at `/reporting/`
