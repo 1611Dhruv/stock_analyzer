@@ -26,7 +26,7 @@ This Django application serves as a comprehensive financial data analysis platfo
 1. Clone the repository:
 
    ```bash
-   git clone [https://github.com/1611Dhruv/stock_analyzer](https://github.com/1611Dhruv/stock_analyzer)
+   git clone https://github.com/1611Dhruv/stocker
    ```
 
 2. Set up the environment variables:
@@ -129,4 +129,4 @@ docker run -p 8000:8000 --env-file .env financial-data-analysis-app
 
 The platform is currently deployed on Google Cloud Run. You can access the site at [this link](https://stock-analyzer-949436389006.us-central1.run.app).
 
-The open-source repository is available at [https://github.com/1611Dhruv/stock_analyzer](https://github.com/1611Dhruv/stock_analyzer).
+The open-source repository is available at [https://github.com/1611Dhruv/stock_analyzer](https://github.com/1611Dhruv/stocker).
