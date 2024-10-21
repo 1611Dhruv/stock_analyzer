@@ -22,7 +22,7 @@
         </h2>
 
         <!-- Form for Adding Symbol -->
-        <form method="POST">
+        <form action="/financial_data/add/" method="POST">
           {% csrf_token %}
           <!-- Add Symbol Field -->
           <div class="mb-4">
@@ -65,7 +65,7 @@
         </h2>
 
         <!-- Form for Stock Symbol Search -->
-        <form method="GET" action="{% url 'view_data' %}">
+        <form method="GET" action="{% url 'list_data_view' %}">
           <div class="mb-4">
             <label
               for="search_symbol"

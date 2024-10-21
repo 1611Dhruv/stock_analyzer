@@ -7,7 +7,7 @@ from django.http.response import HttpResponseBadRequest
 from financial_data.tasks import add_symbol, get_data, get_symbols, periodic_update
 
 logger = logging.getLogger("financial_data")
-logger.setLevel(logging.CRITICAL)
+logger.setLevel(logging.INFO)
 
 
 def add_symbol_view(request: HttpRequest) -> HttpResponse:
@@ -27,6 +27,7 @@ def add_symbol_view(request: HttpRequest) -> HttpResponse:
             except Exception as e:
                 logger.error(e)
                 return HttpResponseBadRequest(e)
+            return JsonResponse({"status":"OK"})
 
     return HttpResponseBadRequest("Invalid request")
 
@@ -37,6 +38,7 @@ def refresh_symbols_view(request: HttpRequest) -> HttpResponse:
     """
     if request.method == "POST":
         periodic_update()
+        return JsonResponse({"status":"OK"})
     return HttpResponseBadRequest("Invalid request")
 
 
