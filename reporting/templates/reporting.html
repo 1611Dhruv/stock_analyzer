@@ -92,6 +92,9 @@
               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
             />
           </div>
+          <div class=" ">
+
+          </div>
 
           <!-- Search Button -->
           <div class="flex justify-center mt-6">
@@ -141,6 +144,104 @@
         </div>
       </div>
       {% endif %}
+
+      <div class="bg-white rounded-lg shadow-lg p-8 max-w-lg mx-auto mt-10">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">
+          Backtesting
+        </h2>
+
+        <!-- <form id="backtest-form" method="GET"> -->
+          <div class="mb-4">
+            <label
+              for="symbol"
+              class="block text-gray-700 font-medium mb-2"
+            >
+              Search Symbol
+            </label>
+            <input
+              type="text"
+              id="symbol-fld"
+              placeholder="Enter stock symbol (e.g., IBM)"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent mb-4"
+            />
+            <label
+              for="amt-fld"
+              class="block text-gray-700 font-medium mb-2"
+            >
+              Amount
+            </label>
+            <input
+              type="text"
+              id="amt-fld"
+              placeholder="Enter amount"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent mb-4"
+            />
+            <label
+              for="sell_threshold"
+              class="block text-gray-700 font-medium mb-2"
+            >
+              Sell Threshold
+            </label>
+            <input
+              type="text"
+              id="sell_threshold"
+              placeholder="Enter sell threshold"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent mb-4"
+            />
+            <label
+              for="buy_threshold"
+              class="block text-gray-700 font-medium mb-2"
+            >
+              Buy Threshold
+            </label>
+            <input
+              type="text"
+              id="buy_threshold"
+              placeholder="Enter but threshold"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent mb-4"
+            />
+          </div>
+          <div class=" ">
+
+          </div>
+
+          <div class="flex justify-between mt-6">
+            <button
+              name="get-pdf"
+              class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+              onClick="getPDF()"
+            >
+              Get PDF
+            </button>
+            <button
+              name="get-json"
+              class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+              onClick="getJSON()"
+            >
+              Get JSON
+            </button>
+          </div>
+        <!-- </form> -->
+        <script>
+          function constructBacktestURL(pdf) {
+            const symbol = document.getElementById('symbol-fld').value;
+            const amount = document.getElementById('amt-fld').value;
+            const sellThreshold = document.getElementById('sell_threshold').value;
+            const buyThreshold = document.getElementById('buy_threshold').value;
+
+            return "/backtesting?format=" + (pdf? "pdf" : "json") + "&symbol=" + symbol + 
+                          "&winsell=" + sellThreshold + "&winbuy=" + buyThreshold + "&amt=" + amount;
+          }
+
+          function getPDF() {
+            window.open(constructBacktestURL(true));
+          }
+
+          function getJSON() {
+            window.open(constructBacktestURL(false));
+          }
+        </script>
+      </div>
     </div>
   </body>
 </html>
