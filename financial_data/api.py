@@ -80,9 +80,14 @@ def fetch_stocks(symbol: str, since: datetime = two_years_ago) -> List[ApiStock]
 
     time_series = "Time Series (Daily)"
 
+    print(data)
     if time_series not in data:
         logger.error("The JSON object doesn't contain ", time_series, " element")
-        raise ApiError("No Data")
+        raise ApiError(
+            "The JSON object doesn't contain ",
+            time_series,
+            " element (Probably hit a rate limit)",
+        )
 
     open = "1. open"
     high = "2. high"
