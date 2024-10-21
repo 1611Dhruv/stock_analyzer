@@ -1,7 +1,7 @@
 from collections import namedtuple
 
-import matplotlib.pyplot as plt
 import pandas as pd
+
 from financial_data.models import FinancialData
 
 BacktestResult = namedtuple(
@@ -14,7 +14,7 @@ class BacktestError(Exception):
 
 
 def backtest(
-    symbol: str, initial_amt: int, enter_wl: int, exit_wl: int
+    symbol: str, initial_amt: float, enter_wl: int, exit_wl: int
 ) -> BacktestResult:
     """
     This function performs the backtesting
