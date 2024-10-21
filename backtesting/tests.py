@@ -1,10 +1,11 @@
 from unittest.mock import patch
 
 import pandas as pd
-from backtesting.backtest import backtest, backtest_logic
 from django.test import TestCase
-from financial_data.tasks import add_symbol
 from requests.models import Response
+
+from backtesting.backtest import backtest, backtest_logic
+from financial_data.tasks import add_symbol
 
 
 class TestBackTest(TestCase):
@@ -65,17 +66,7 @@ class TestBackTest(TestCase):
         initial_amt = 10000
         closing_prices = [10, 10, 10, 15, 10, 20, 20, 20, 10]
 
-        expectedPf = [
-            10000,
-            10000,
-            10000,
-            10000,
-            10000,
-            20000,
-            20000,
-            20000,
-            20000,
-        ]
+        expectedPf = [10000, 10000, 10000, 10000, 10000, 20000, 20000, 20000, 20000]
         days = len(closing_prices)
         expectedTrades = 3
         expectedReturn = (expectedPf[-1] - initial_amt) / initial_amt * 100

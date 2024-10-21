@@ -1,5 +1,4 @@
 FROM python:3.11-slim-buster
-FROM sqlite:3.36.0
 
 # Set working directory
 WORKDIR /app
@@ -7,11 +6,15 @@ WORKDIR /app
 # Copy all project files
 COPY . .
 
-ENV ALPHA_VANTAGE_API_KEY=GX4181VXEDB5XM3A
-# Run the startup script which will initialize the project
-RUN . ./startup
-RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev
+# Install the python requirements
+RUN pip install -r requirements.txt
 
-WORKDIR  /app
-# Define the command to run your Django application
+# Expose port 8000
+EXPOSE 8000
+
+# Check for database migrations
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+
+# Run server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

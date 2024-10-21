@@ -3,6 +3,7 @@ import tempfile
 from typing import Dict
 
 import matplotlib
+import matplotlib.dates as mdates
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
@@ -24,21 +25,28 @@ def generate_pdf_backtest(
             backtest_result = backtest(symbol, initial_amt, enter_wl, exit_wl)
 
             df = backtest_result.portfolio_data
+            print(df)
             plt.figure(figsize=(12, 6))
+
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+            plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+
             plt.plot(
-                df.index, df["portfolio_value"], label="Portfolio Value", color="blue"
+                df["date"], df["portfolio_value"], label="Portfolio Value", color="blue"
             )
+
+            plt.gcf().autofmt_xdate()
+
             plt.title("Portfolio Value Over Time")
-            plt.xlabel("Date")
+            plt.xlabel("Date (YYYY-MM-DD)")
             plt.ylabel("Portfolio Value")
             plt.legend()
             plt.grid()
-            pdf.savefig()  # Save the plot to PDF
-            plt.close
+            pdf.savefig()
+            plt.close()
 
-            # Create a text summary of the results
             plt.figure(figsize=(8, 6))
-            plt.axis("off")  # Turn off axis
+            plt.axis("off")
             plt.text(
                 0.1,
                 0.9,
@@ -55,10 +63,8 @@ def generate_pdf_backtest(
                 0.1, 0.5, f"Number of Trades: {backtest_result.trades}", fontsize=14
             )
             plt.title("Backtesting Summary", fontsize=16)
-            pdf.savefig()  # Save the summary to PDF
+            pdf.savefig()
             plt.close()
-
-        # Return the path to the temporary PDF
         return tmp_path
 
 

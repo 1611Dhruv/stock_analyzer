@@ -35,7 +35,7 @@ def backtesting_view(request):
             with open(path, "rb") as file:
                 response = HttpResponse(file.read(), content_type="application/pdf")
                 response["Content-Disposition"] = (
-                    'attachment; filename="backtesting_report.pdf"'
+                    'inline; filename="backtesting_report.pdf"'
                 )
                 os.remove(path)
                 return response
