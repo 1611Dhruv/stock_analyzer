@@ -1,10 +1,19 @@
+import os
 import pickle
+import tempfile
 from datetime import datetime, timedelta
 
+import matplotlib
+import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+
 from ai_integration.models import Predictions
 from financial_data.models import Symbol
+
+matplotlib.use("Agg")
 
 
 class SymbolDNE(Exception):
@@ -61,6 +70,39 @@ def predict_and_save(symbol: str) -> pd.DataFrame:
     save_predictions(symbol, pred_df)
     pred_df.set_index("date", inplace=True)
     return pred_df
+
+
+def generate_pdf_predictions(df: pd.DataFrame) -> str:
+    """
+    This returns a pdf endpoint which can be used
+    """
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        with PdfPages(tmp.name) as pdf:
+            tmp_path = tmp.name
+
+            plt.figure(figsize=(12, 6))
+
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+            plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+
+            plt.plot(
+                df.index,
+                df["predicted_close_price"],
+                label="Predicted Close Price",
+                color="red",
+            )
+
+            plt.gcf().autofmt_xdate()
+
+            plt.title("Predicted Stock Price For Next 30 Days")
+            plt.xlabel("Date (YYYY-MM-DD)")
+            plt.ylabel("Predicted Value")
+            plt.legend()
+            plt.grid()
+            pdf.savefig()
+            plt.close()
+
+        return tmp_path
 
 
 def save_predictions(symbol: str, predictions_df: pd.DataFrame):

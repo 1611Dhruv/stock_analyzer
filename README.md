@@ -73,7 +73,7 @@ python manage.py runserver
 
 ### Backtesting
 
-- `GET /back_test?format=<pdf|json>&symbol=<symbol>&winsell=<sell_threshold>&winbuy=<buy_threshold>&amt=<initial_amt>`
+- `GET /backtesting?format=<pdf|json>&symbol=<symbol>&winsell=<sell_threshold>&winbuy=<buy_threshold>&amt=<initial_amt>`
   - Perform backtesting with specified parameters
 
 ### AI Prediction
