@@ -61,11 +61,8 @@ def fetch_stocks(symbol: str, since: datetime = two_years_ago) -> List[ApiStock]
         logger.info("Requesting ", url)
         res = requests.get(url, timeout=timeout)
 
-        print(res.status_code)
         # Raise if not OK status
         res.raise_for_status()
-
-        print("I reached her")
         # Parse the request as json
         data = res.json()
     except requests.exceptions.Timeout:

@@ -22,7 +22,7 @@
         </h2>
 
         <!-- Form for Adding Symbol -->
-        <form action="/financial_data/add/" method="POST">
+        <form id="manage-symbols-form" method="POST">
           {% csrf_token %}
           <!-- Add Symbol Field -->
           <div class="mb-4">
@@ -44,6 +44,7 @@
               type="submit"
               name="add_symbol"
               class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+              onClick="addSymbol()"
             >
               Add Symbol
             </button>
@@ -51,11 +52,21 @@
               type="submit"
               name="refresh_existing"
               class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+              onClick="refreshSymbol()"
             >
               Refresh Existing
             </button>
           </div>
         </form>
+        <script>
+          function addSymbol() {
+            document.getElementById('manage-symbols-form').action="/financial_data/add/";
+          }
+
+          function refreshSymbol() {
+            document.getElementById('manage-symbols-form').action="/financial_data/refresh/";
+          }
+        </script>
       </div>
 
       <!-- Stock Symbol Search Section -->
