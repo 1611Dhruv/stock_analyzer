@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "financial_data",
     "backtesting",
     "ai_integration",
+    "reporting",
 ]
 
 MIDDLEWARE = [

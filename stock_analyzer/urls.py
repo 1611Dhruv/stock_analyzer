@@ -22,4 +22,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("financial_data/", include("financial_data.urls")),
     path("ai_prediction/", include("ai_integration.urls")),
+    path("reporting/", include("reporting.urls")),
 ]
