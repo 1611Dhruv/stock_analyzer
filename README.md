@@ -1,4 +1,4 @@
-# Financial Data Analysis Platform
+# Stocker - A Stock Analyzer
 
 ## Overview
 
