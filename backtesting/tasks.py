@@ -2,7 +2,13 @@ import os
 import tempfile
 from typing import Dict
 
+import matplotlib
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+
 from backtesting.backtest import backtest
+
+matplotlib.use("Agg")
 
 
 def generate_pdf_backtest(
@@ -12,10 +18,47 @@ def generate_pdf_backtest(
     This function generates a temporary PDF file and returns
     the temp pdf's path
     """
-    with tempfile.NamedTemporaryFile(suffix=".pdf") as tmp:
-        tmp_path = tmp.name
-        backtest_result = backtest(symbol, initial_amt, enter_wl, exit_wl)
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        with PdfPages(tmp.name) as pdf:
+            tmp_path = tmp.name
+            backtest_result = backtest(symbol, initial_amt, enter_wl, exit_wl)
 
+            df = backtest_result.portfolio_data
+            plt.figure(figsize=(12, 6))
+            plt.plot(
+                df.index, df["portfolio_value"], label="Portfolio Value", color="blue"
+            )
+            plt.title("Portfolio Value Over Time")
+            plt.xlabel("Date")
+            plt.ylabel("Portfolio Value")
+            plt.legend()
+            plt.grid()
+            pdf.savefig()  # Save the plot to PDF
+            plt.close
+
+            # Create a text summary of the results
+            plt.figure(figsize=(8, 6))
+            plt.axis("off")  # Turn off axis
+            plt.text(
+                0.1,
+                0.9,
+                f"Total Return: {backtest_result.total_return:.2f}%",
+                fontsize=14,
+            )
+            plt.text(
+                0.1,
+                0.7,
+                f"Max Drawdown: {backtest_result.max_drawdown:.2f}%",
+                fontsize=14,
+            )
+            plt.text(
+                0.1, 0.5, f"Number of Trades: {backtest_result.trades}", fontsize=14
+            )
+            plt.title("Backtesting Summary", fontsize=16)
+            pdf.savefig()  # Save the summary to PDF
+            plt.close()
+
+        # Return the path to the temporary PDF
         return tmp_path
 
 

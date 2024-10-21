@@ -1,4 +1,6 @@
-from django.http import HttpResponseBadRequest, JsonResponse
+import os
+
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
 
 from backtesting.tasks import generate_json_backtest, generate_pdf_backtest
@@ -29,7 +31,14 @@ def backtesting_view(request):
             format = "json"
 
         if format == "pdf":
-            generate_pdf_backtest(symbol, amt, winbuy, winsell)
+            path = generate_pdf_backtest(symbol, amt, winbuy, winsell)
+            with open(path, "rb") as file:
+                response = HttpResponse(file.read(), content_type="application/pdf")
+                response["Content-Disposition"] = (
+                    'attachment; filename="backtesting_report.pdf"'
+                )
+                os.remove(path)
+                return response
         if format != "json":
             return HttpResponseBadRequest("Unknowown format")
 
