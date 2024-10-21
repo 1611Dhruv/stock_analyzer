@@ -81,6 +81,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "stock_analyzer.wsgi.application"
 
+CSRF_TRUSTED_ORIGINS = [
+    "localhost",
+    "http://" + os.getenv("ALLOWED_HOST", "127.0.0.1"),
+    "https://" + os.getenv("ALLOWED_HOST", "127.0.0.1"),
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

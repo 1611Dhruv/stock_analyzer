@@ -11,12 +11,15 @@ This Django application serves as a comprehensive financial data analysis platfo
 - Backtesting of simple buy/sell strategies
 - Integration of a pre-trained machine learning model for stock price prediction
 - Comprehensive report generation
+- Deployed on Google Cloud Run
+- Dockerfile included for easy deployment
 
 ## Prerequisites
 
 - Python 3.x
 - pip
 - git
+- Docker
 
 ## Installation
 
@@ -42,6 +45,17 @@ This Django application serves as a comprehensive financial data analysis platfo
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
+
+## Database Schema
+
+The database schema consists of two tables:
+
+1. **Symbol Table**: Stores stock symbols.
+2. **Financial Data Table**: Stores financial data with `symbol` as a foreign key. There is an index built on the financial data, ensuring that data is always ordered by date. Retrievals are optimized with no sorting costs due to fixed ordering of `symbol` followed by `date`.
+
+## Machine Learning
+
+The ML predictions are stored similarly to financial data. If the user specifies `format=pdf`, the predicted prices are returned as a Matplotlib-generated PDF and stored in the database.
 
 ## Running the Application
 
@@ -78,9 +92,37 @@ python manage.py runserver
 
 ### AI Prediction
 
-- `GET /ai_prediction?symbol=<symbol>`
-  - Get predicted prices for a symbol
+- `GET /ai_prediction?symbol=<symbol>&format=<pdf|json>`
+  - Get predicted prices for a symbol. If `format=pdf`, the predictions are returned as a PDF and stored in the database.
 
 ### Reporting
 
-- Access the reporting interface at `/reporting/`
+- Access the reporting interface at `/reporting/`. This provides a user-friendly UI to interact with the various endpoints.
+
+## Deployment
+
+### Docker
+
+A `Dockerfile` is attached for easy deployment. Before running the Docker container, ensure the following environment variables are set:
+
+- `ALPHA_VANTAGE_API_KEY`: Key to interact with the API
+- `DB_HOST`: PostgreSQL database host
+- `DB_PORT`: PostgreSQL database port
+- `DB_NAME`: PostgreSQL database name
+- `DB_USER`: PostgreSQL username
+- `DB_PASSWORD`: PostgreSQL password
+- `ALLOWED_HOST`: Django specifications for allowed hosts (for CSRF tokens)
+- `DEBUG`: Django debug mode (set to `True` or `False`)
+
+To build and run the Docker container:
+
+```bash
+docker build -t financial-data-analysis-app .
+docker run -p 8000:8000 --env-file .env financial-data-analysis-app
+```
+
+### Deployment
+
+The platform is currently deployed on Google Cloud Run. You can access the site at [your-site-url].
+
+The open-source repository is available at [your-repo-url].

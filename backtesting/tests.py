@@ -190,7 +190,6 @@ class TestBackTest(TestCase):
         add_symbol("IBM")
         # Run the backtest
         result = backtest("IBM", initial_amt, 2, 3)
-        print(result)
 
         # Check expected values
         self.assertEqual(result.trades, expectedTrades)
