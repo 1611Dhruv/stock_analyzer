@@ -15,5 +15,3 @@ if [ ! -f .env ]; then
 fi
 
 
-export $(grep -v '^#' .env | xargs)
-echo "Updated all environment variables"
