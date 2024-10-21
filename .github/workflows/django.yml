@@ -20,6 +20,15 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Set up venv
+        run: |
+          python -m venv .venv
+
+      - name: Install dependencies
+        run: |
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
       - name: Run Tests
         env:
           ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
@@ -29,4 +38,5 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
+          source .venv/bin/activate
           python manage.py test
