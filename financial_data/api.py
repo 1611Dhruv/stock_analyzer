@@ -55,6 +55,7 @@ def fetch_stocks(symbol: str, since: datetime = two_years_ago) -> List[ApiStock]
             f"{URL}?function={function}&symbol={symbol}"
             + f"&outputsize={output_size}&apikey={API_KEY}"
         )
+        print(url)
         # 10 second timeout
         timeout = 10
         logger.info("Requesting ", url)
@@ -80,13 +81,14 @@ def fetch_stocks(symbol: str, since: datetime = two_years_ago) -> List[ApiStock]
 
     time_series = "Time Series (Daily)"
 
-    print(data)
     if time_series not in data:
         logger.error("The JSON object doesn't contain ", time_series, " element")
         raise ApiError(
             "The JSON object doesn't contain ",
             time_series,
             " element (Probably hit a rate limit)",
+            "Here is the data:",
+            data,
         )
 
     open = "1. open"
