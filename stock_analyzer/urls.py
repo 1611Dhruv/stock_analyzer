@@ -16,9 +16,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import include, path
 
+
+def root(request):
+    return redirect("reporting/")
+
+
 urlpatterns = [
+    path("", root),
     path("admin/", admin.site.urls),
     path("financial_data/", include("financial_data.urls")),
     path("backtesting/", include("backtesting.urls")),
